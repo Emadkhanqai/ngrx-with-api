@@ -1,7 +1,9 @@
 export const initialState: CounterState = {
-  counter: 4
+  counter: 4,
+  channelName: 'Future Leaders'
 };
 
 export interface CounterState {
-  counter: number
+  counter: number,
+  channelName: string
 }
