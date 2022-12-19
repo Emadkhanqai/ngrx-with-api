@@ -1,0 +1,45 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="form">
+  <div class="row">
+    <div class="col-md-12">
+      <label>Title</label>
+      <input type="text" class="form-control" formControlName="title" />
+      <div
+        style="color: red"
+        *ngIf="form.get('title')?.touched && !form.get('title')?.valid"
+      >
+        Title is required
+      </div>
+
+      <br />
+    </div>
+
+    <div class="col-md-12">
+      <label>Description</label>
+      <textarea
+        type="text"
+        class="form-control"
+        formControlName="description"
+      ></textarea>
+      <div
+        style="color: red"
+        *ngIf="
+          form.get('description')?.touched && !form.get('description')?.valid
+        "
+      >
+        Description is required
+      </div>
+
+      <br />
+    </div>
+
+    <div class="col-md-12">
+      <button
+        type="submit"
+        [disabled]="!this.form.valid"
+        class="btn btn-primary"
+      >
+        SUBMIT
+      </button>
+    </div>
+  </div>
+</form>

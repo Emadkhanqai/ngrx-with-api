@@ -14,7 +14,7 @@ import { CounterOutputComponent } from './counter-output/counter-output.componen
 import { CounterComponent } from './counter/counter.component';
 import { counterReducer } from './state/counter.reducer';
 import { CustomCounterInputComponent } from './custom-counter-input/custom-counter-input.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
 import { PostsComponent } from './posts/posts.component';
@@ -22,6 +22,7 @@ import { PostsListComponent } from './posts/posts-list/posts-list.component';
 import { HomeComponent } from './home/home.component';
 import { postsReducer } from './posts/state/posts.reducer';
 import { appReducer } from './store/app.state';
+import { AddPostComponent } from './posts/add-post/add-post.component';
 
 @NgModule({
   declarations: [
@@ -32,13 +33,15 @@ import { appReducer } from './store/app.state';
     CustomCounterInputComponent,
     PostsComponent,
     PostsListComponent,
-    HomeComponent
+    HomeComponent,
+    AddPostComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     StoreModule.forRoot(appReducer),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states

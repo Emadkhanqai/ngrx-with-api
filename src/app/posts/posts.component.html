@@ -1,3 +1,11 @@
-<p>POSTS</p>
-
-<app-posts-list></app-posts-list>
+<div class="row">
+  <p>POSTS</p>
+  <div class="col-md-6">
+    <a [routerLink]="['/posts/add']" class="btn btn-primary">Add Post</a>
+    <br>
+    <app-posts-list></app-posts-list>
+  </div>
+  <div class="col-md-6">
+    <router-outlet></router-outlet>
+  </div>
+</div>
