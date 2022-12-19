@@ -1,8 +1,14 @@
 <br />
 <div>
-  <input type="text" [(ngModel)]="value" />
-  <button (click)="onAdd()">Add button</button>
-  <button (click)="changeName()">Change Name</button>
+  <input
+    type="text"
+    [(ngModel)]="value"
+    class="form-control"
+    placeholder="write something here"
+  />
+  <br />
+  <button (click)="onAdd()" class="btn btn-primary">Change Number</button> &nbsp;
+  <button (click)="changeName()" class="btn btn-primary">Change Name</button>
 </div>
 <br />
 {{ channelName$ | async }}
