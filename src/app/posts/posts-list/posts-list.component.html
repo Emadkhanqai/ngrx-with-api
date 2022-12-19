@@ -4,6 +4,7 @@
       <th>ID</th>
       <th>TITLE</th>
       <th>DESCRIPTION</th>
+      <th>ACTION</th>
     </tr>
   </thead>
   <tbody>
@@ -11,6 +12,9 @@
       <td>{{ post.id }}</td>
       <td>{{ post.title }}</td>
       <td>{{ post.description }}</td>
+      <td>
+        <a class="btn btn-primary" [routerLink]="['edit',post.id]">UPDATE</a>
+      </td>
     </tr>
   </tbody>
 </table>
