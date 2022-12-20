@@ -15,6 +15,7 @@ import { environment } from 'src/environments/environment';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { CounterModule } from './counter/counter.module';
 import { PostsModule } from './posts/posts.module';
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { PostsModule } from './posts/posts.module';
       logOnly: environment.production
     }),
     CounterModule,
-    PostsModule],
+    PostsModule,
+    AuthModule],
   providers: [],
   bootstrap: [AppComponent]
 })
