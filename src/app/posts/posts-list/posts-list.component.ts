@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { filter, Observable } from 'rxjs';
 import { Post } from 'src/app/models/posts.model';
 import { AppState } from 'src/app/store/app.state';
+import { deletePost } from '../state/posts.actions';
 import { getPosts } from '../state/posts.selector';
 
 @Component({
@@ -11,11 +12,28 @@ import { getPosts } from '../state/posts.selector';
   styleUrls: ['./posts-list.component.scss']
 })
 export class PostsListComponent implements OnInit {
-  posts$!: Observable<Post[]>;
+  posts!: Post[];
+  search!: string;
+
   constructor(private store: Store<AppState>) { }
 
   ngOnInit(): void {
-   this.posts$= this.store.select(getPosts);
+    this.store.select(getPosts).subscribe((data) => this.posts = data);
+  }
+
+  deletePost(id: any) {
+    this.store.dispatch(deletePost({ id }));
+  }
+
+  searchTable() {
+    const search = [...this.posts];
+    const query =
+      search.filter((x: any) => x.title.trim().toLowerCase().includes(this.search.trim().toLowerCase()));
+    if (query.length > 0) {
+      this.posts = query;
+    } else {
+      this.posts = search;
+    }
   }
 
 }

@@ -24,6 +24,7 @@ import { postsReducer } from './posts/state/posts.reducer';
 import { appReducer } from './store/app.state';
 import { AddPostComponent } from './posts/add-post/add-post.component';
 import { EditPostComponent } from './posts/edit-post/edit-post.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { EditPostComponent } from './posts/edit-post/edit-post.component';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    Ng2SearchPipeModule,
     StoreModule.forRoot(appReducer),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
