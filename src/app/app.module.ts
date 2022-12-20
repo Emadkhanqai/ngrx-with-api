@@ -9,35 +9,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CounterButtonsComponent } from './counter-buttons/counter-buttons.component';
-import { CounterOutputComponent } from './counter-output/counter-output.component';
-import { CounterComponent } from './counter/counter.component';
-import { counterReducer } from './state/counter.reducer';
-import { CustomCounterInputComponent } from './custom-counter-input/custom-counter-input.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
-import { PostsComponent } from './posts/posts.component';
-import { PostsListComponent } from './posts/posts-list/posts-list.component';
-import { HomeComponent } from './home/home.component';
-import { postsReducer } from './posts/state/posts.reducer';
-import { appReducer } from './store/app.state';
-import { AddPostComponent } from './posts/add-post/add-post.component';
-import { EditPostComponent } from './posts/edit-post/edit-post.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { CounterModule } from './counter/counter.module';
+import { PostsModule } from './posts/posts.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CounterComponent,
-    CounterButtonsComponent,
-    CounterOutputComponent,
-    CustomCounterInputComponent,
-    PostsComponent,
-    PostsListComponent,
-    HomeComponent,
-    AddPostComponent,
-    EditPostComponent
   ],
   imports: [
     BrowserModule,
@@ -45,16 +26,14 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    Ng2SearchPipeModule,
-    StoreModule.forRoot(appReducer),
+    StoreModule.forRoot({}),
     StoreDevtoolsModule.instrument({
-      maxAge: 25, // Retains last 25 states
-      // logOnly: !isDevMode(), // Restrict extension to log-only mode
-      autoPause: true, // Pauses recording actions and state changes when the extension window is not open
-      // trace: false, //  If set to true, will include stack trace for every dispatched action, so you can see it in trace tab jumping directly to that part of code
-      // traceLimit: 75, // maximum stack trace frames to be stored (in case trace option was provided as true)
+      maxAge: 25,
+      autoPause: true,
       logOnly: environment.production
-    })],
+    }),
+    CounterModule,
+    PostsModule],
   providers: [],
   bootstrap: [AppComponent]
 })

@@ -21,15 +21,15 @@ export class AddPostComponent implements OnInit {
       description: new FormControl(null, [Validators.required]),
     })
   }
+
   onSubmit() {
     if (this.form.valid) {
       const post: Post = {
         title: this.form.get('title')?.value,
         description: this.form.get('description')?.value,
       }
-      this.store.dispatch(addPost({post}));
+      this.store.dispatch(addPost({ post }));
     }
-
   }
 
 }
