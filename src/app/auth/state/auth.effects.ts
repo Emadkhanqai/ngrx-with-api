@@ -6,19 +6,20 @@ import { loginStart, loginSuccess } from "./auth.actions";
 
 @Injectable()
 export class AuthEffects {
-    constructor(private action$: Actions, private authService: AuthService) {
-    }
+  constructor(private action$: Actions, private authService: AuthService) {
+  }
 
-    login$ = createEffect(() => {
-        return this.action$
+  login$ = createEffect(() => {
+    return this.action$
+      .pipe(
+        ofType(loginStart),
+        exhaustMap((action: any) => {
+          return this.authService.login(action.email, action.password)
             .pipe(
-                ofType(loginStart),
-                exhaustMap((action: any) => {
-                    return this.authService.login(action.email, action.password)
-                        .pipe(
-                            map((data: any) => {
-                                return loginSuccess();
-                            }))
-                }))
-    })
+              map((data: any) => {
+                const user = this.authService.format(data);
+                return loginSuccess({ user });
+              }))
+        }))
+  })
 }
