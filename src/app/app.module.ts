@@ -18,10 +18,15 @@ import { PostsModule } from './posts/posts.module';
 import { AuthModule } from './auth/auth.module';
 import { EffectsModule } from '@ngrx/effects';
 import { HttpClientModule } from '@angular/common/http';
+import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
+import { HeaderComponent } from './shared/header/header.component';
+import { appReducer } from './store/app.state';
 
 @NgModule({
   declarations: [
     AppComponent,
+    LoadingSpinnerComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,16 +35,13 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    StoreModule.forRoot({}),
+    StoreModule.forRoot(appReducer),
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       autoPause: true,
       logOnly: environment.production
-    }),
-    CounterModule,
-    PostsModule,
-    AuthModule],
+    })],
   providers: [],
   bootstrap: [AppComponent]
 })
