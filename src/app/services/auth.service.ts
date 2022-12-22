@@ -1,9 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { autoLogout } from '../auth/state/auth.actions';
 import { AuthResponseData } from '../models/auth-response-data.model';
 import { User } from '../models/user.model';
+import { AppState } from '../store/app.state';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +14,7 @@ import { User } from '../models/user.model';
 export class AuthService {
   timeoutInterval: any;
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private store: Store<AppState> ) { }
 
   login(email: string, password: string): Observable<AuthResponseData> {
     return this.httpClient.post<AuthResponseData>(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.FIREBASE_API_KEY}`, {
@@ -54,7 +57,7 @@ export class AuthService {
 
   setUserInLocalStorage(user: User) {
     localStorage.setItem('userData', JSON.stringify(user));
-    this.runTimeOutInterval(user);
+    this.runTimeoutInterval(user);
   }
 
   getUserFromLocalStorage() {
@@ -62,20 +65,34 @@ export class AuthService {
     if (userDataString) {
       const userData = JSON.parse(userDataString);
       const expirationDate = new Date(userData.expirationDate);
-      const user = new User(userData.email, userData.token, userData.localId, expirationDate);
-      this.runTimeOutInterval(user);
+      const user = new User(
+        userData.email,
+        userData.token,
+        userData.localId,
+        expirationDate
+      );
+      this.runTimeoutInterval(user);
       return user;
     }
     return null;
   }
 
-  runTimeOutInterval(user: User) {
+  runTimeoutInterval(user: User) {
     const todaysDate = new Date().getTime();
     const expirationDate = user.expireDate.getTime();
     const timeInterval = expirationDate - todaysDate;
 
     this.timeoutInterval = setTimeout(() => {
       // logout functionality or get the refreshed token
+      this.store.dispatch(autoLogout());
     }, timeInterval)
+  }
+
+  logout() {
+    localStorage.removeItem('userData');
+    if (this.timeoutInterval) {
+      clearTimeout(this.timeoutInterval);
+      this.timeoutInterval = null;
+    }
   }
 }
