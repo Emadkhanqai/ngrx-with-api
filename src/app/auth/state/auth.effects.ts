@@ -1,7 +1,8 @@
 import { Injectable } from "@angular/core";
+import { Router } from "@angular/router";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
-import { catchError, exhaustMap, map, of } from "rxjs";
+import { catchError, exhaustMap, map, of, tap } from "rxjs";
 import { AuthService } from "src/app/services/auth.service";
 import { AppState } from "src/app/store/app.state";
 import { setErrorMessage, setLoadingSpinner, setSuccessMessage } from "src/app/store/shared/shared.action";
@@ -11,7 +12,8 @@ import { loginStart, loginSuccess } from "./auth.actions";
 export class AuthEffects {
   constructor(private action$: Actions,
     private authService: AuthService,
-    private store: Store<AppState>) {
+    private store: Store<AppState>,
+    private router: Router) {
   }
 
   login$ = createEffect(() => {
@@ -36,4 +38,11 @@ export class AuthEffects {
               }))
         }))
   })
+
+  // dispatch: false means don't return anything
+  loginRedirect$ = createEffect(() => {
+    return this.action$.pipe(ofType(loginSuccess), tap(action => {
+      this.router.navigate(['/'])
+    }))
+  }, { dispatch: false })
 }
