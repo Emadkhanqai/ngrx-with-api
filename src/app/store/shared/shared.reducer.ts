@@ -1,14 +1,26 @@
 
 import { createReducer, on } from '@ngrx/store';
-import { setLoadingSpinner } from './shared.action';
+import { setErrorMessage, setLoadingSpinner, setSuccessMessage } from './shared.action';
 import { initialState } from './shared.state';
 
 const _sharedReducer = createReducer(
   initialState,
   on(setLoadingSpinner, (state, action) => {
     return {
-      state,
+      ...state,
       showLoading: action.status,
+    };
+  }),
+  on(setErrorMessage, (state: any, action) => {
+    return {
+      ...state,
+      errorMessage: action.message,
+    };
+  }),
+  on(setSuccessMessage, (state: any, action) => {
+    return {
+      ...state,
+      successMessage: action.message,
     };
   })
 );
