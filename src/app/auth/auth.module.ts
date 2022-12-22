@@ -9,6 +9,7 @@ import { AUTH_STATE_NAME } from './state/auth.selector';
 import { AuthReducer } from './state/auth.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './state/auth.effects';
+import { SignUpComponent } from './sign-up/sign-up.component';
 
 
 const routes: Routes = [
@@ -24,6 +25,10 @@ const routes: Routes = [
       {
         path: 'login',
         component: LoginComponent
+      },
+      {
+        path: 'signup',
+        component: SignUpComponent
       }
     ]
   }
@@ -32,7 +37,8 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    LoginComponent
+    LoginComponent,
+    SignUpComponent
   ],
   imports: [
     CommonModule,
