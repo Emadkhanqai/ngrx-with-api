@@ -9,6 +9,7 @@ import { User } from '../models/user.model';
   providedIn: 'root'
 })
 export class AuthService {
+  timeoutInterval: any;
 
   constructor(private httpClient: HttpClient) { }
 
@@ -42,12 +43,39 @@ export class AuthService {
       case 'INVALID_PASSWORD':
         return 'Password not found'
         break;
-        case 'EMAIL_EXISTS':
-          return 'Email already exists'
-          break;
+      case 'EMAIL_EXISTS':
+        return 'Email already exists'
+        break;
       default:
         return 'Unknown error occurred'
         break;
     }
+  }
+
+  setUserInLocalStorage(user: User) {
+    localStorage.setItem('userData', JSON.stringify(user));
+    this.runTimeOutInterval(user);
+  }
+
+  getUserFromLocalStorage() {
+    const userDataString = localStorage.getItem('userData');
+    if (userDataString) {
+      const userData = JSON.parse(userDataString);
+      const expirationDate = new Date(userData.expirationDate);
+      const user = new User(userData.email, userData.token, userData.localId, expirationDate);
+      this.runTimeOutInterval(user);
+      return user;
+    }
+    return null;
+  }
+
+  runTimeOutInterval(user: User) {
+    const todaysDate = new Date().getTime();
+    const expirationDate = user.expireDate.getTime();
+    const timeInterval = expirationDate - todaysDate;
+
+    this.timeoutInterval = setTimeout(() => {
+      // logout functionality or get the refreshed token
+    }, timeInterval)
   }
 }

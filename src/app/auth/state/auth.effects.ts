@@ -2,11 +2,11 @@ import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
-import { catchError, exhaustMap, map, of, tap } from "rxjs";
+import { catchError, exhaustMap, map, mergeMap, of, tap } from "rxjs";
 import { AuthService } from "src/app/services/auth.service";
 import { AppState } from "src/app/store/app.state";
 import { setErrorMessage, setLoadingSpinner, setSuccessMessage } from "src/app/store/shared/shared.action";
-import { loginStart, loginSuccess, signUpStart, signUpSuccess } from "./auth.actions";
+import { autoLogin, loginStart, loginSuccess, signUpStart, signUpSuccess } from "./auth.actions";
 
 @Injectable()
 export class AuthEffects {
@@ -28,6 +28,7 @@ export class AuthEffects {
                 this.store.dispatch(setSuccessMessage({ message: 'User logged In Successfully' }));
                 this.store.dispatch(setErrorMessage({ message: '' }));
                 const user = this.authService.format(data);
+                this.authService.setUserInLocalStorage(user);
                 return loginSuccess({ user });
               }),
               catchError((error) => {
@@ -59,6 +60,7 @@ export class AuthEffects {
                 this.store.dispatch(setSuccessMessage({ message: 'User Registered Successfully' }));
                 this.store.dispatch(setErrorMessage({ message: '' }));
                 const user = this.authService.format(data);
+                this.authService.setUserInLocalStorage(user);
                 return signUpSuccess({ user });
               }),
               catchError((error) => {
@@ -70,4 +72,15 @@ export class AuthEffects {
         }))
   })
 
+  autoLogin$ = createEffect(
+    () => {
+      return this.action$.pipe(
+        ofType(autoLogin),
+        map((action) => {
+          const user = this.authService.getUserFromLocalStorage();
+          console.log(user);
+        })
+      );
+    },
+    { dispatch: false });
 }
