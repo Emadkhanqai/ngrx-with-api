@@ -8,5 +8,25 @@
   <div class="alert alert-success" *ngIf="successMessage | async as success">
     {{ success }}
   </div>
+  <p>
+    <b>switchMap</b> - Cancels the current subscription/request and can cause
+    race condition. Used for Get Requests or cancel requests like searches or
+    autocomplete.
+  </p>
+
+  <p>
+    <b>concatMap</b> - Runs subscriptions/requests in order and is less
+    performant Used for get, post or put requests when order is important.
+  </p>
+
+  <p>
+    <b>mergeMap</b> - Runs subscriptions/requests in parallel. Used for get,
+    post or put requests when order is not important.
+  </p>
+
+  <p>
+    <b>exhaustMap</b> - Ignores all the subscriptions/requests until it is
+    completed
+  </p>
   <router-outlet></router-outlet>
 </div>

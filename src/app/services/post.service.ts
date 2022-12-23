@@ -27,4 +27,18 @@ export class PostService {
   addPost(post: Post): Observable<{ name: string }> {
     return this.httpClient.post<{ name: string }>('https://vue-completecourse.firebaseio.com/posts.json', post);
   }
+
+  updatePost(post: Post) {
+    const postData = {
+      [post.id]: {
+        title: post.title,
+        description: post.description
+      }
+    };
+    return this.httpClient.patch('https://vue-completecourse.firebaseio.com/posts.json', postData);
+  }
+
+  deletePost(id: string) {
+    return this.httpClient.delete(`https://vue-completecourse.firebaseio.com/posts.json?id=${id}`);
+  }
 }

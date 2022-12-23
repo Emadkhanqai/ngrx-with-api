@@ -23,6 +23,7 @@ export class PostsListComponent implements OnInit {
   }
 
   deletePost(id: any) {
+    console.log('called')
     this.store.dispatch(deletePost({ id }));
   }
 
