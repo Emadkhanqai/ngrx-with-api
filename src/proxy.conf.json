@@ -1,0 +1,7 @@
+{
+  "/*": {
+    "target": "https://ngrx-3c00d-default-rtdb.firebaseio.com/",
+    "secure": false,
+    "logLevel": "debug"
+  }
+}

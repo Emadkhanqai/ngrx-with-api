@@ -9,6 +9,8 @@ import { PostsListComponent } from './posts-list/posts-list.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { StoreModule } from '@ngrx/store';
 import { postsReducer } from './state/posts.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { PostEffects } from './state/posts.effects';
 
 const routes: Routes = [
 
@@ -36,7 +38,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     Ng2SearchPipeModule,
     StoreModule.forFeature('posts', postsReducer),
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    EffectsModule.forFeature([PostEffects])
   ]
 })
 export class PostsModule { }
