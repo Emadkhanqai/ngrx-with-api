@@ -39,6 +39,6 @@ export class PostService {
   }
 
   deletePost(id: string) {
-    return this.httpClient.delete(`https://vue-completecourse.firebaseio.com/posts.json?id=${id}`);
+    return this.httpClient.delete(`https://vue-completecourse.firebaseio.com/posts/${id}.json`);
   }
 }

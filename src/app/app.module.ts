@@ -17,11 +17,12 @@ import { CounterModule } from './counter/counter.module';
 import { PostsModule } from './posts/posts.module';
 import { AuthModule } from './auth/auth.module';
 import { EffectsModule } from '@ngrx/effects';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { appReducer } from './store/app.state';
 import { AuthEffects } from './auth/state/auth.effects';
+import { AuthTokenInterceptor } from './services/auth-token.interceptor';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,7 @@ import { AuthEffects } from './auth/state/auth.effects';
       autoPause: true,
       logOnly: environment.production
     })],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthTokenInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

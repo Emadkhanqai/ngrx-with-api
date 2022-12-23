@@ -5,6 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { AddPostComponent } from './posts/add-post/add-post.component';
 import { EditPostComponent } from './posts/edit-post/edit-post.component';
 import { PostsComponent } from './posts/posts.component';
+import { AuthGuard } from './services/auth.guard';
 
 const routes: Routes = [
   {
@@ -13,15 +14,16 @@ const routes: Routes = [
   },
   {
     path: 'counter',
-    loadChildren: ()=> import('./counter/counter.module').then((m)=> m.CounterModule)
+    loadChildren: () => import('./counter/counter.module').then((m) => m.CounterModule)
   },
   {
     path: 'posts',
-    loadChildren: ()=> import('./posts/posts.module').then((m)=> m.PostsModule)
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./posts/posts.module').then((m) => m.PostsModule)
   },
   {
     path: 'auth',
-    loadChildren: ()=> import('./auth/auth.module').then((m)=> m.AuthModule)
+    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule)
   },
 ];
 
